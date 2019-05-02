@@ -8,13 +8,36 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
 
+    var count = 0
+    
+    @IBOutlet weak var mySlider: UISlider!
+    @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var myTabelView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        myLabel.text = String(mySlider.value)
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    @IBAction func siderMoved(_sender:Any){
+        myLabel.text = String(Int(mySlider.value))
+        myTabelView.reloadData()
+        
+    }
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let myCell = myTabelView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
+        
+        let timeTableValue = Int(mySlider.value)
+        myCell.textLabel?.text = String(timeTableValue + indexPath.row)
+        return myCell
     }
 
-
+    
 }
 
